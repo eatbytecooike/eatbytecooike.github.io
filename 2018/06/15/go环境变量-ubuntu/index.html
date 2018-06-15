@@ -5,19 +5,19 @@
   
 
   
-  <title>golang | Hexo</title>
+  <title>go环境变量(ubuntu) | Hexo</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="(^__^)">
+  <meta name="description" content="临时设置环境变量:    添加到PATH末尾: export PATH=$PATH:/1/2/3    添加到PATH开头: export PATH=/1/2/3:$PATH 环境变量参数: (linux区分大小写)    GOROOT: go语言的根目录，官方推荐目录是: /usr/local    PATH: 环境变量中增加: $GOROOT/bin    GOPATH: 工作区，可以有一个或">
 <meta property="og:type" content="article">
-<meta property="og:title" content="golang">
-<meta property="og:url" content="http://yoursite.com/2018/06/14/golang/index.html">
+<meta property="og:title" content="go环境变量(ubuntu)">
+<meta property="og:url" content="http://yoursite.com/2018/06/15/go环境变量-ubuntu/index.html">
 <meta property="og:site_name" content="Hexo">
-<meta property="og:description" content="(^__^)">
+<meta property="og:description" content="临时设置环境变量:    添加到PATH末尾: export PATH=$PATH:/1/2/3    添加到PATH开头: export PATH=/1/2/3:$PATH 环境变量参数: (linux区分大小写)    GOROOT: go语言的根目录，官方推荐目录是: /usr/local    PATH: 环境变量中增加: $GOROOT/bin    GOPATH: 工作区，可以有一个或">
 <meta property="og:locale" content="default">
-<meta property="og:updated_time" content="2018-06-14T09:45:40.045Z">
+<meta property="og:updated_time" content="2018-06-15T09:53:38.255Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="golang">
-<meta name="twitter:description" content="(^__^)">
+<meta name="twitter:title" content="go环境变量(ubuntu)">
+<meta name="twitter:description" content="临时设置环境变量:    添加到PATH末尾: export PATH=$PATH:/1/2/3    添加到PATH开头: export PATH=/1/2/3:$PATH 环境变量参数: (linux区分大小写)    GOROOT: go语言的根目录，官方推荐目录是: /usr/local    PATH: 环境变量中增加: $GOROOT/bin    GOPATH: 工作区，可以有一个或">
   
     <link rel="alternate" href="/atom.xml" title="Hexo" type="application/atom+xml">
   
@@ -64,14 +64,14 @@
   </div>
 </header>
       <div class="outer">
-        <section id="main"><article id="post-golang" class="article article-type-post" itemscope itemprop="blogPost">
+        <section id="main"><article id="post-go环境变量-ubuntu" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
-    <a href="/2018/06/14/golang/" class="article-date">
-  <time datetime="2018-06-14T09:43:16.000Z" itemprop="datePublished">2018-06-14</time>
+    <a href="/2018/06/15/go环境变量-ubuntu/" class="article-date">
+  <time datetime="2018-06-15T09:50:29.000Z" itemprop="datePublished">2018-06-15</time>
 </a>
     
   <div class="article-category">
-    <a class="article-category-link" href="/categories/go语言/">go语言</a>
+    <a class="article-category-link" href="/categories/Ubuntu/">Ubuntu</a>
   </div>
 
   </div>
@@ -82,7 +82,7 @@
         
   
     <h1 class="article-title" itemprop="name">
-      golang
+      go环境变量(ubuntu)
     </h1>
   
 
@@ -90,12 +90,17 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <p>(<em>^__^</em>) </p>
+        <p>临时设置环境变量:<br>    添加到PATH末尾: export PATH=$PATH:/1/2/3<br>    添加到PATH开头: export PATH=/1/2/3:$PATH</p>
+<p>环境变量参数: (linux区分大小写)<br>    GOROOT: go语言的根目录，官方推荐目录是: /usr/local<br>    PATH: 环境变量中增加: $GOROOT/bin<br>    GOPATH: 工作区，可以有一个或多个，一般目录为: $HOME/golang/examplegos</p>
+<p>示例:<br>    export GOROOT=/usr/local/go<br>    export PATH=$PATH:$GOROOT/bin<br>    export GOPATH=$HOME/golang/examplegos</p>
+<p>永久设置环境变量</p>
+<p>对所有用户生效 编辑 /etc/profile文件<br>对单一用户生效 编辑用户目录下 .bash_profile文件</p>
+<p>立刻生效: source /etc/profile 或者 . /etc/profile<br>(source命令也称为“点命令”也就是一个符号（.）.source命令通常用于重新执行刚修改的初始或文件，使之立即生效，而不必注销并重新登录。)</p>
 
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/06/14/golang/" data-id="cjifsqkc600005yd8n5ion2mq" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2018/06/15/go环境变量-ubuntu/" data-id="cjifsqkca00015yd8n26mhp72" class="article-share-link">Share</a>
       
       
     </footer>
@@ -104,19 +109,19 @@
     
 <nav id="article-nav">
   
-    <a href="/2018/06/14/hello-world/" id="article-nav-newer" class="article-nav-link-wrap">
+    <a href="/2018/06/15/ubuntu常用命令/" id="article-nav-newer" class="article-nav-link-wrap">
       <strong class="article-nav-caption">Newer</strong>
       <div class="article-nav-title">
         
-          欢迎
+          ubuntu常用命令
         
       </div>
     </a>
   
   
-    <a href="/2018/06/14/hexo搭建/" id="article-nav-older" class="article-nav-link-wrap">
+    <a href="/2018/06/14/hello-world/" id="article-nav-older" class="article-nav-link-wrap">
       <strong class="article-nav-caption">Older</strong>
-      <div class="article-nav-title">利用hexo在github搭建微博</div>
+      <div class="article-nav-title">欢迎</div>
     </a>
   
 </nav>
