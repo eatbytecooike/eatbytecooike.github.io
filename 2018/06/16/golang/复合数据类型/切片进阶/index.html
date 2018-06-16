@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+
+  
+  <title>切片进阶 | book</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="12345678910111213141516171819202122232425262728293031323334353637383940414243444546474849505152535455565758596061626364656667686970717273747576777879808182838485package mainimport (	&amp;quot;fmt&amp;quot;	&amp;q">
+<meta property="og:type" content="article">
+<meta property="og:title" content="切片进阶">
+<meta property="og:url" content="http://yoursite.com/2018/06/16/golang/复合数据类型/切片进阶/index.html">
+<meta property="og:site_name" content="book">
+<meta property="og:description" content="12345678910111213141516171819202122232425262728293031323334353637383940414243444546474849505152535455565758596061626364656667686970717273747576777879808182838485package mainimport (	&amp;quot;fmt&amp;quot;	&amp;q">
+<meta property="og:locale" content="default">
+<meta property="og:updated_time" content="2018-06-16T11:34:38.378Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="切片进阶">
+<meta name="twitter:description" content="12345678910111213141516171819202122232425262728293031323334353637383940414243444546474849505152535455565758596061626364656667686970717273747576777879808182838485package mainimport (	&amp;quot;fmt&amp;quot;	&amp;q">
+  
+    <link rel="alternate" href="/atom.xml" title="book" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">book</a>
+      </h1>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://yoursite.com"></form>
+      </div>
+    </div>
+  </div>
+</header>
+      <div class="outer">
+        <section id="main"><article id="post-golang/复合数据类型/切片进阶" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2018/06/16/golang/复合数据类型/切片进阶/" class="article-date">
+  <time datetime="2018-06-16T11:33:28.000Z" itemprop="datePublished">2018-06-16</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/golang/">golang</a>►<a class="article-category-link" href="/categories/golang/复合数据类型/">复合数据类型</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      切片进阶
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br></pre></td><td class="code"><pre><span class="line">package main</span><br><span class="line"></span><br><span class="line">import (</span><br><span class="line">	&quot;fmt&quot;</span><br><span class="line">	&quot;reflect&quot;</span><br><span class="line">	&quot;errors&quot;</span><br><span class="line">)</span><br><span class="line"></span><br><span class="line">/*</span><br><span class="line">使用append函数增加slice元素</span><br><span class="line">slice可以实现栈</span><br><span class="line"></span><br><span class="line">注意：</span><br><span class="line">1.超过slice容量后，会为底层函数重新开辟更大内存空间</span><br><span class="line">2.开辟新的内存空间，需手动更新slice的指针</span><br><span class="line"> */</span><br><span class="line">func main()  &#123;</span><br><span class="line">	//append</span><br><span class="line">	myslice := make([]int, 1, 1)</span><br><span class="line"></span><br><span class="line">	for i := 0 ; i &lt; 10 ; i++ &#123;</span><br><span class="line">		//更新slice</span><br><span class="line">		myslice = append(myslice, i + 1)</span><br><span class="line">		fmt.Println(i,&quot;: 当前容量为&quot;, cap(myslice), myslice)</span><br><span class="line">	&#125;</span><br><span class="line">	/*</span><br><span class="line">	0 : 当前容量为 2 [0 1]</span><br><span class="line">	1 : 当前容量为 4 [0 1 2]</span><br><span class="line">	2 : 当前容量为 4 [0 1 2 3]</span><br><span class="line">	3 : 当前容量为 8 [0 1 2 3 4]</span><br><span class="line">	4 : 当前容量为 8 [0 1 2 3 4 5]</span><br><span class="line">	5 : 当前容量为 8 [0 1 2 3 4 5 6]</span><br><span class="line">	6 : 当前容量为 8 [0 1 2 3 4 5 6 7]</span><br><span class="line">	7 : 当前容量为 16 [0 1 2 3 4 5 6 7 8]</span><br><span class="line">	8 : 当前容量为 16 [0 1 2 3 4 5 6 7 8 9]</span><br><span class="line">	9 : 当前容量为 16 [0 1 2 3 4 5 6 7 8 9 10]</span><br><span class="line">	 */</span><br><span class="line"></span><br><span class="line">	//rune实质为int32 byte实质为uint8</span><br><span class="line">	myrunes := []rune(&quot;你好&quot;)</span><br><span class="line">	mybytes := []byte(&quot;世界&quot;)</span><br><span class="line">	fmt.Println(reflect.TypeOf(myrunes), reflect.TypeOf(mybytes))</span><br><span class="line"></span><br><span class="line">	//stack</span><br><span class="line">	mys := stackint&#123;&#125;</span><br><span class="line">	//入栈</span><br><span class="line">	for i := 0; i &lt; 10 ; i++ &#123;</span><br><span class="line">		mys.stackPush(i)</span><br><span class="line">	&#125;</span><br><span class="line">	mys.showMystack()</span><br><span class="line">	//出栈</span><br><span class="line">	for i := 0; i &lt; 11 ; i++ &#123;</span><br><span class="line">		mys.stackPop()</span><br><span class="line">	&#125;</span><br><span class="line">	mys.showMystack()</span><br><span class="line">	//入栈</span><br><span class="line">	for i := 0; i &lt; 10 ; i++ &#123;</span><br><span class="line">		mys.stackPush(i)</span><br><span class="line">	&#125;</span><br><span class="line">	mys.showMystack()</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">type stackint struct &#123;</span><br><span class="line">	s []int</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">//入栈</span><br><span class="line">func (mystack *stackint)stackPush(x int)  &#123;</span><br><span class="line">	mystack.s = append(mystack.s, x)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">//出栈</span><br><span class="line">func (mystack *stackint)stackPop() (int,error) &#123;</span><br><span class="line">	if len(mystack.s) != 0 &#123;</span><br><span class="line">		tempint := mystack.s[len(mystack.s) - 1]</span><br><span class="line">		mystack.s = mystack.s[:len(mystack.s) - 1]</span><br><span class="line">		return tempint, nil</span><br><span class="line">	&#125; else &#123;</span><br><span class="line">		return 0, errors.New(&quot;栈为空&quot;)</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">func (mystack *stackint)showMystack() &#123;</span><br><span class="line">	fmt.Println(mystack.s)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2018/06/16/golang/复合数据类型/切片进阶/" data-id="cjihbrm0m000h38d8svyw5w4p" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+  
+    <a href="/2018/06/16/golang/复合数据类型/切片基础slice/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">切片基础slice</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Categories</h3>
+    <div class="widget">
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/golang/">golang</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/golang/复合数据类型/">复合数据类型</a></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/hexo/">hexo</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/ubuntu/">ubuntu</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+
+  
+    
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/06/">June 2018</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recent Posts</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2018/06/16/golang/复合数据类型/切片进阶/">切片进阶</a>
+          </li>
+        
+          <li>
+            <a href="/2018/06/16/golang/复合数据类型/切片基础slice/">切片基础slice</a>
+          </li>
+        
+          <li>
+            <a href="/2018/06/16/ubuntu/postman/">postman</a>
+          </li>
+        
+          <li>
+            <a href="/2018/06/16/golang/复合数据类型/数组/">数组</a>
+          </li>
+        
+          <li>
+            <a href="/2018/06/15/ubuntu/ubuntu安装视频插件/">ubuntu安装视频插件</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2018 zbh<br>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+  <script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+<script src="/js/script.js"></script>
+
+
+
+  </div>
+</body>
+</html>

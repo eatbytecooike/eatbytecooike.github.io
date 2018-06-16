@@ -62,6 +62,47 @@
       <div class="outer">
         <section id="main">
   
+    <article id="post-golang/复合数据类型/切片进阶" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2018/06/16/golang/复合数据类型/切片进阶/" class="article-date">
+  <time datetime="2018-06-16T11:33:28.000Z" itemprop="datePublished">2018-06-16</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/golang/">golang</a>►<a class="article-category-link" href="/categories/golang/复合数据类型/">复合数据类型</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2018/06/16/golang/复合数据类型/切片进阶/">切片进阶</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br></pre></td><td class="code"><pre><span class="line">package main</span><br><span class="line"></span><br><span class="line">import (</span><br><span class="line">	&quot;fmt&quot;</span><br><span class="line">	&quot;reflect&quot;</span><br><span class="line">	&quot;errors&quot;</span><br><span class="line">)</span><br><span class="line"></span><br><span class="line">/*</span><br><span class="line">使用append函数增加slice元素</span><br><span class="line">slice可以实现栈</span><br><span class="line"></span><br><span class="line">注意：</span><br><span class="line">1.超过slice容量后，会为底层函数重新开辟更大内存空间</span><br><span class="line">2.开辟新的内存空间，需手动更新slice的指针</span><br><span class="line"> */</span><br><span class="line">func main()  &#123;</span><br><span class="line">	//append</span><br><span class="line">	myslice := make([]int, 1, 1)</span><br><span class="line"></span><br><span class="line">	for i := 0 ; i &lt; 10 ; i++ &#123;</span><br><span class="line">		//更新slice</span><br><span class="line">		myslice = append(myslice, i + 1)</span><br><span class="line">		fmt.Println(i,&quot;: 当前容量为&quot;, cap(myslice), myslice)</span><br><span class="line">	&#125;</span><br><span class="line">	/*</span><br><span class="line">	0 : 当前容量为 2 [0 1]</span><br><span class="line">	1 : 当前容量为 4 [0 1 2]</span><br><span class="line">	2 : 当前容量为 4 [0 1 2 3]</span><br><span class="line">	3 : 当前容量为 8 [0 1 2 3 4]</span><br><span class="line">	4 : 当前容量为 8 [0 1 2 3 4 5]</span><br><span class="line">	5 : 当前容量为 8 [0 1 2 3 4 5 6]</span><br><span class="line">	6 : 当前容量为 8 [0 1 2 3 4 5 6 7]</span><br><span class="line">	7 : 当前容量为 16 [0 1 2 3 4 5 6 7 8]</span><br><span class="line">	8 : 当前容量为 16 [0 1 2 3 4 5 6 7 8 9]</span><br><span class="line">	9 : 当前容量为 16 [0 1 2 3 4 5 6 7 8 9 10]</span><br><span class="line">	 */</span><br><span class="line"></span><br><span class="line">	//rune实质为int32 byte实质为uint8</span><br><span class="line">	myrunes := []rune(&quot;你好&quot;)</span><br><span class="line">	mybytes := []byte(&quot;世界&quot;)</span><br><span class="line">	fmt.Println(reflect.TypeOf(myrunes), reflect.TypeOf(mybytes))</span><br><span class="line"></span><br><span class="line">	//stack</span><br><span class="line">	mys := stackint&#123;&#125;</span><br><span class="line">	//入栈</span><br><span class="line">	for i := 0; i &lt; 10 ; i++ &#123;</span><br><span class="line">		mys.stackPush(i)</span><br><span class="line">	&#125;</span><br><span class="line">	mys.showMystack()</span><br><span class="line">	//出栈</span><br><span class="line">	for i := 0; i &lt; 11 ; i++ &#123;</span><br><span class="line">		mys.stackPop()</span><br><span class="line">	&#125;</span><br><span class="line">	mys.showMystack()</span><br><span class="line">	//入栈</span><br><span class="line">	for i := 0; i &lt; 10 ; i++ &#123;</span><br><span class="line">		mys.stackPush(i)</span><br><span class="line">	&#125;</span><br><span class="line">	mys.showMystack()</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">type stackint struct &#123;</span><br><span class="line">	s []int</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">//入栈</span><br><span class="line">func (mystack *stackint)stackPush(x int)  &#123;</span><br><span class="line">	mystack.s = append(mystack.s, x)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">//出栈</span><br><span class="line">func (mystack *stackint)stackPop() (int,error) &#123;</span><br><span class="line">	if len(mystack.s) != 0 &#123;</span><br><span class="line">		tempint := mystack.s[len(mystack.s) - 1]</span><br><span class="line">		mystack.s = mystack.s[:len(mystack.s) - 1]</span><br><span class="line">		return tempint, nil</span><br><span class="line">	&#125; else &#123;</span><br><span class="line">		return 0, errors.New(&quot;栈为空&quot;)</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">func (mystack *stackint)showMystack() &#123;</span><br><span class="line">	fmt.Println(mystack.s)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2018/06/16/golang/复合数据类型/切片进阶/" data-id="cjihbrm0m000h38d8svyw5w4p" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+  
     <article id="post-golang/复合数据类型/切片基础slice" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
     <a href="/2018/06/16/golang/复合数据类型/切片基础slice/" class="article-date">
@@ -93,7 +134,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/06/16/golang/复合数据类型/切片基础slice/" data-id="cjih6o3fe000f1md8jo4dih5u" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2018/06/16/golang/复合数据类型/切片基础slice/" data-id="cjihbrm0k000f38d8ildd2z52" class="article-share-link">Share</a>
       
       
     </footer>
@@ -135,7 +176,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/06/16/ubuntu/postman/" data-id="cjih6o3ez00031md8ylgp3a0q" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2018/06/16/ubuntu/postman/" data-id="cjihbrm04000338d8dkuw6fhl" class="article-share-link">Share</a>
       
       
     </footer>
@@ -180,7 +221,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/06/16/golang/复合数据类型/数组/" data-id="cjih6o3ff000g1md8we82gm12" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2018/06/16/golang/复合数据类型/数组/" data-id="cjihbrm0l000g38d8mn2pilv2" class="article-share-link">Share</a>
       
       
     </footer>
@@ -221,7 +262,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/06/15/ubuntu/ubuntu安装视频插件/" data-id="cjih6o3f000041md82prm3llb" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2018/06/15/ubuntu/ubuntu安装视频插件/" data-id="cjihbrm06000438d82xhkbh0h" class="article-share-link">Share</a>
       
       
     </footer>
@@ -262,7 +303,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/06/15/ubuntu/ubuntu常用命令/" data-id="cjih6o3f100051md8lly1yt4h" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2018/06/15/ubuntu/ubuntu常用命令/" data-id="cjihbrm07000538d8iwspmzjf" class="article-share-link">Share</a>
       
       
     </footer>
@@ -308,7 +349,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/06/15/golang/go环境变量-ubuntu/" data-id="cjih6o3ep00001md8xex6qyh3" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2018/06/15/golang/go环境变量-ubuntu/" data-id="cjihbrlzu000038d8qu7qgdpv" class="article-share-link">Share</a>
       
       
     </footer>
@@ -349,7 +390,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/06/14/hexo/hexo搭建/" data-id="cjih6o3eu00011md8yly3hjmf" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2018/06/14/hexo/hexo搭建/" data-id="cjihbrlzz000138d8ti7b3dy9" class="article-share-link">Share</a>
       
       
     </footer>
@@ -397,6 +438,10 @@
       <ul>
         
           <li>
+            <a href="/2018/06/16/golang/复合数据类型/切片进阶/">切片进阶</a>
+          </li>
+        
+          <li>
             <a href="/2018/06/16/golang/复合数据类型/切片基础slice/">切片基础slice</a>
           </li>
         
@@ -410,10 +455,6 @@
         
           <li>
             <a href="/2018/06/15/ubuntu/ubuntu安装视频插件/">ubuntu安装视频插件</a>
-          </li>
-        
-          <li>
-            <a href="/2018/06/15/ubuntu/ubuntu常用命令/">ubuntu常用命令</a>
           </li>
         
       </ul>
