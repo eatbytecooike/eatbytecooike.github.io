@@ -14,7 +14,7 @@
 <meta property="og:site_name" content="book">
 <meta property="og:description" content="定义:数组是具有固定长度，有零个或多个相同数据类型元素的序列。劣势:由于数组的长度固定，Go语言中使用场景较少。 注意:1.数组的长度是数组类型的一部分,例如[3]int和[4]int是两个不同的数组类型。数组的长度必须是常量表达式，该表达式的值在编译时确定。2.函数传参会创建副本，所以传递大数组会很低效，且只影响副本，应使用指针传递。Go语言把数组和其他类型作为值传递。其他语言中，数组是隐式地使">
 <meta property="og:locale" content="default">
-<meta property="og:updated_time" content="2018-06-16T04:42:59.951Z">
+<meta property="og:updated_time" content="2018-06-16T04:46:36.916Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="数组">
 <meta name="twitter:description" content="定义:数组是具有固定长度，有零个或多个相同数据类型元素的序列。劣势:由于数组的长度固定，Go语言中使用场景较少。 注意:1.数组的长度是数组类型的一部分,例如[3]int和[4]int是两个不同的数组类型。数组的长度必须是常量表达式，该表达式的值在编译时确定。2.函数传参会创建副本，所以传递大数组会很低效，且只影响副本，应使用指针传递。Go语言把数组和其他类型作为值传递。其他语言中，数组是隐式地使">
@@ -92,15 +92,16 @@
       
         <p>定义:数组是具有固定长度，有零个或多个相同数据类型元素的序列。<br>劣势:由于数组的长度固定，Go语言中使用场景较少。</p>
 <p>注意:<br>1.数组的长度是数组类型的一部分,例如[3]int和[4]int是两个不同的数组类型。<br>数组的长度必须是常量表达式，该表达式的值在编译时确定。<br>2.函数传参会创建副本，所以传递大数组会很低效，且只影响副本，应使用指针传递。<br>Go语言把数组和其他类型作为值传递。其他语言中，数组是隐式地使用引用传递。</p>
-<p>//定义一个类型为5个长度整数数组的变量,未赋值,初始值为元素默认值<br><figure class="highlight plain"><figcaption><span>myarray1 [5]int```</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">//定义并赋值</span><br><span class="line">```var myarray2 [3]int = [3]int&#123;1, 2, 3&#125;</span><br></pre></td></tr></table></figure></p>
-<p>//定义并赋值,赋值长度不够定义长度,余下数据则为默认值<br><figure class="highlight plain"><figcaption><span>myarray3 [3]int </span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">//定义并赋值,若以省略号出现在长度位置上,则数组长度由初始化数组元素个数决定</span><br><span class="line">```myarray4 := [...]int&#123;1, 2, 3, 4&#125;</span><br></pre></td></tr></table></figure></p>
-<p>//不常见用法,9个0,,-1,-4<br><figure class="highlight plain"><figcaption><span>:</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">//数组类型一样,且元素类型是可比较的,则数组可比较</span><br><span class="line">```fmt.Println(myarray2 == myarray3)</span><br></pre></td></tr></table></figure></p>
-<p>//函数传参会创建副本<br><figure class="highlight plain"><figcaption><span>changeArray(tempArray [3]int) [3]int &#123;</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">	for i := range tempArray &#123;</span><br><span class="line">		tempArray[i] = 10</span><br><span class="line">	&#125;</span><br><span class="line">	return  tempArray</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">fmt.Println(changeArray(myarray2))</span><br><span class="line">fmt.Println(myarray2)</span><br><span class="line"></span><br><span class="line">结果：</span><br><span class="line">[10 10 10]</span><br><span class="line">[1 2 3]</span><br></pre></td></tr></table></figure></p>
+<p>//定义一个类型为5个长度整数数组的变量,未赋值,初始值为元素默认值<br>var myarray1 [5]int<br>//定义并赋值<br>var myarray2 [3]int = [3]int{1, 2, 3}<br>//定义并赋值,赋值长度不够定义长度,余下数据则为默认值<br>var myarray3 [3]int = [3]int{1}<br>//定义并赋值,若以省略号出现在长度位置上,则数组长度由初始化数组元素个数决定<br>myarray4 := […]int{1, 2, 3, 4}<br>//不常见用法,9个0,,-1,-4<br>myarray5 := […]int{9:-1,-4}</p>
+<p>//数组类型一样,且元素类型是可比较的,则数组可比较<br>fmt.Println(myarray2 == myarray3)</p>
+<p>//函数传参会创建副本<br>func changeArray(tempArray [3]int) [3]int {<br>    for i := range tempArray {<br>        tempArray[i] = 10<br>    }<br>    return  tempArray<br>}</p>
+<p>fmt.Println(changeArray(myarray2))<br>fmt.Println(myarray2)</p>
+<p>结果：<br>[10 10 10]<br>[1 2 3]</p>
 
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/06/16/golang/复合数据类型/数组/" data-id="cjigx27mt000cyqd8dhw90wsk" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2018/06/16/golang/复合数据类型/数组/" data-id="cjigx9ep1000f18d8swov1rp1" class="article-share-link">Share</a>
       
       
     </footer>
@@ -108,6 +109,15 @@
   
     
 <nav id="article-nav">
+  
+    <a href="/2018/06/16/ubuntu/postman/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Newer</strong>
+      <div class="article-nav-title">
+        
+          postman
+        
+      </div>
+    </a>
   
   
     <a href="/2018/06/15/ubuntu/ubuntu安装视频插件/" id="article-nav-older" class="article-nav-link-wrap">
@@ -156,6 +166,10 @@
       <ul>
         
           <li>
+            <a href="/2018/06/16/ubuntu/postman/">postman</a>
+          </li>
+        
+          <li>
             <a href="/2018/06/16/golang/复合数据类型/数组/">数组</a>
           </li>
         
@@ -169,10 +183,6 @@
         
           <li>
             <a href="/2018/06/15/golang/go环境变量-ubuntu/">go环境变量(ubuntu)</a>
-          </li>
-        
-          <li>
-            <a href="/2018/06/14/hexo/hexo搭建/">利用hexo在github搭建微博</a>
           </li>
         
       </ul>
