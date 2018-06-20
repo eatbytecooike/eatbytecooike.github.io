@@ -62,6 +62,47 @@
       <div class="outer">
         <section id="main">
   
+    <article id="post-golang/复合数据类型/JSON基础" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2018/06/20/golang/复合数据类型/JSON基础/" class="article-date">
+  <time datetime="2018-06-20T05:55:57.000Z" itemprop="datePublished">2018-06-20</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/golang/">golang</a>►<a class="article-category-link" href="/categories/golang/复合数据类型/">复合数据类型</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2018/06/20/golang/复合数据类型/JSON基础/">post</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br></pre></td><td class="code"><pre><span class="line">package main</span><br><span class="line"></span><br><span class="line">import (</span><br><span class="line">	&quot;encoding/json&quot;</span><br><span class="line">	&quot;log&quot;</span><br><span class="line">	&quot;fmt&quot;</span><br><span class="line">)</span><br><span class="line"></span><br><span class="line">/*</span><br><span class="line">JavaScript对象表示法(JSON)是一种发送和接收格式化信息的标准。</span><br><span class="line">JSON是JavaScript值的Unicode编码，包括 字符串 数字 布尔值 数组 对象</span><br><span class="line">数字：十进制或科学计数法表示。go语言数字类型会变成json浮点型 例如： -231.12</span><br><span class="line">布尔值：true或false。 例如：true</span><br><span class="line">字符串：双引号括起来的Unicode代码点的序列，使用反斜杠作为转义字符。 例如： &quot;hello \&quot; &quot;</span><br><span class="line">数组:方括号括起来，使用逗号分隔元素。用来编码GO语言中的数组和slice。 例如：[&quot;gold&quot;, &quot;silver&quot;, &quot;bronze&quot;]</span><br><span class="line"></span><br><span class="line"> */</span><br><span class="line"></span><br><span class="line"> //结构体成员名首字母大写才可以转换JSON</span><br><span class="line"> type Movie struct &#123;</span><br><span class="line"> 	Title string  //字符串</span><br><span class="line"> 	Year int `json:&quot;date&quot;` //整型 对应到date的成员标签</span><br><span class="line"> 	Important bool  //布尔类型</span><br><span class="line"> 	Lists []string  //slice</span><br><span class="line"> 	Point *int  //指针 取得指针指向的值，空指针则对应null</span><br><span class="line"> 	Object Ob  //对象</span><br><span class="line"> &#125;</span><br><span class="line"></span><br><span class="line"> type Ob struct &#123;</span><br><span class="line"> 	myname string</span><br><span class="line"> &#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">func main()  &#123;</span><br><span class="line">	po1 := new(int)</span><br><span class="line">	*po1 = 10</span><br><span class="line">	ob1 := Ob&#123;&quot;biliy&quot;&#125;</span><br><span class="line">	m1 := []Movie&#123;</span><br><span class="line">		&#123;&quot;GL1&quot;, 1997, true, []string&#123;&quot;str1&quot;, &quot;str2&quot;&#125;, po1, ob1&#125;,</span><br><span class="line">		&#123;&quot;GL2&quot;, 1998, true, []string&#123;&quot;str11&quot;, &quot;str22&quot;&#125;, po1, ob1&#125;,</span><br><span class="line">		&#123;&quot;GL3&quot;, 1999, true, []string&#123;&quot;str111&quot;, &quot;str222&quot;&#125;, po1, ob1&#125;,</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	//将go数据结构转换成json。实现了一个接口的所有方法意味着实现了这个接口，所以任何类都实现了空接口</span><br><span class="line">	data1, err := json.Marshal(m1)</span><br><span class="line">	if err != nil &#123;</span><br><span class="line">		log.Fatal(&quot;JSON marshaling failed : %s&quot;, err)</span><br><span class="line">	&#125;</span><br><span class="line">	fmt.Printf(&quot;%s\n&quot;, data1)</span><br><span class="line"></span><br><span class="line">	//格式化输出结果,v2定义前缀字符串，v3定义锁紧的字符串</span><br><span class="line">	data2, err := json.MarshalIndent(m1, &quot;&quot;, &quot;    &quot;)</span><br><span class="line">	if err != nil &#123;</span><br><span class="line">		log.Fatal(&quot;JSON marshaling failed : %s&quot;, err)</span><br><span class="line">	&#125;</span><br><span class="line">	fmt.Printf(&quot;%s\n&quot;, data2)</span><br><span class="line"></span><br><span class="line">	//将JSON解码为GO数据结构,只取得title字段</span><br><span class="line">	var titles []struct&#123; Title string &#125;</span><br><span class="line">	if err := json.Unmarshal(data1, &amp;titles); err != nil &#123;</span><br><span class="line">		log.Fatal(&quot;unmarshling failed: %s&quot;, err)</span><br><span class="line">	&#125;</span><br><span class="line">	fmt.Println(titles)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2018/06/20/golang/复合数据类型/JSON基础/" data-id="cjimpieji000f8qd849u175j8" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+  
     <article id="post-golang/复合数据类型/切片进阶" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
     <a href="/2018/06/16/golang/复合数据类型/切片进阶/" class="article-date">
@@ -93,7 +134,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/06/16/golang/复合数据类型/切片进阶/" data-id="cjihbrm0m000h38d8svyw5w4p" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2018/06/16/golang/复合数据类型/切片进阶/" data-id="cjimpiejm000j8qd84yjg5pjf" class="article-share-link">Share</a>
       
       
     </footer>
@@ -134,7 +175,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/06/16/golang/复合数据类型/切片基础slice/" data-id="cjihbrm0k000f38d8ildd2z52" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2018/06/16/golang/复合数据类型/切片基础slice/" data-id="cjimpiejj000g8qd86u2t0ilm" class="article-share-link">Share</a>
       
       
     </footer>
@@ -176,7 +217,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/06/16/ubuntu/postman/" data-id="cjihbrm04000338d8dkuw6fhl" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2018/06/16/ubuntu/postman/" data-id="cjimpiej500038qd83nihndom" class="article-share-link">Share</a>
       
       
     </footer>
@@ -221,7 +262,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/06/16/golang/复合数据类型/数组/" data-id="cjihbrm0l000g38d8mn2pilv2" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2018/06/16/golang/复合数据类型/数组/" data-id="cjimpiejk000h8qd8kxgebt5j" class="article-share-link">Share</a>
       
       
     </footer>
@@ -262,7 +303,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/06/15/ubuntu/ubuntu安装视频插件/" data-id="cjihbrm06000438d82xhkbh0h" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2018/06/15/ubuntu/ubuntu安装视频插件/" data-id="cjimpiej100018qd84tdqa4q8" class="article-share-link">Share</a>
       
       
     </footer>
@@ -298,12 +339,12 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <p>调出shell: ctrl + alt + t<br>图形界面管理文件 root身份: sudo nautilus<br>新建文件: touch + 文件名<br>查看隐藏文件: ctrl + h<br>获取路径:pwd 或 ctrl + l</p>
+        <p>调出shell: ctrl + alt + t<br>图形界面管理文件 root身份: sudo nautilus<br>新建文件: touch + 文件名<br>查看隐藏文件: ctrl + h<br>获取路径:pwd 或 ctrl + l<br>后台运行: 程序名 &amp;<br>关闭终端继续运行程序: nohup 程序名</p>
 
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/06/15/ubuntu/ubuntu常用命令/" data-id="cjihbrm07000538d8iwspmzjf" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2018/06/15/ubuntu/ubuntu常用命令/" data-id="cjimpiej800058qd8mdj9xzby" class="article-share-link">Share</a>
       
       
     </footer>
@@ -349,7 +390,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/06/15/golang/go环境变量-ubuntu/" data-id="cjihbrlzu000038d8qu7qgdpv" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2018/06/15/golang/go环境变量-ubuntu/" data-id="cjimpiej700048qd80oyrp2tf" class="article-share-link">Share</a>
       
       
     </footer>
@@ -390,7 +431,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/06/14/hexo/hexo搭建/" data-id="cjihbrlzz000138d8ti7b3dy9" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2018/06/14/hexo/hexo搭建/" data-id="cjimpieiw00008qd80500ffyh" class="article-share-link">Share</a>
       
       
     </footer>
@@ -438,6 +479,10 @@
       <ul>
         
           <li>
+            <a href="/2018/06/20/golang/复合数据类型/JSON基础/">post</a>
+          </li>
+        
+          <li>
             <a href="/2018/06/16/golang/复合数据类型/切片进阶/">切片进阶</a>
           </li>
         
@@ -451,10 +496,6 @@
         
           <li>
             <a href="/2018/06/16/golang/复合数据类型/数组/">数组</a>
-          </li>
-        
-          <li>
-            <a href="/2018/06/15/ubuntu/ubuntu安装视频插件/">ubuntu安装视频插件</a>
           </li>
         
       </ul>
