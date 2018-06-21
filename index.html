@@ -80,7 +80,7 @@
         
   
     <h1 itemprop="name">
-      <a class="article-title" href="/2018/06/20/golang/复合数据类型/JSON基础/">post</a>
+      <a class="article-title" href="/2018/06/20/golang/复合数据类型/JSON基础/">JSON基础</a>
     </h1>
   
 
@@ -257,7 +257,7 @@
 <p>注意:<br>1.数组的长度是数组类型的一部分,例如[3]int和[4]int是两个不同的数组类型。<br>数组的长度必须是常量表达式，该表达式的值在编译时确定。<br>2.函数传参会创建副本，所以传递大数组会很低效，且只影响副本，应使用指针传递。<br>Go语言把数组和其他类型作为值传递。其他语言中，数组是隐式地使用引用传递。</p>
 <p>数组定义和初始化</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">//定义一个类型为5个长度整数数组的变量,未初始化,初始值为元素默认值</span><br><span class="line">var myarray1 [5]int</span><br><span class="line">//定义并初始化</span><br><span class="line">var myarray2 [3]int = [3]int&#123;1, 2, 3&#125;</span><br><span class="line">//定义并初始化,赋值长度不够定义长度,余下数据则为默认值</span><br><span class="line">var myarray3 [3]int = [3]int&#123;1&#125;</span><br><span class="line">//定义并初始化,若以省略号出现在长度位置上,则数组长度由初始化数组元素个数决定</span><br><span class="line">myarray4 := [...]int&#123;1, 2, 3, 4&#125;</span><br><span class="line">//不常见用法,9个0,,-1,-4</span><br><span class="line">myarray5 := [...]int&#123;9:-1,-4&#125;</span><br><span class="line"></span><br><span class="line">//数组类型一样,且元素类型是可比较的,则数组可比较</span><br><span class="line">fmt.Println(myarray2 == myarray3)</span><br></pre></td></tr></table></figure>
-<p>数组作为函数参数的情况<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">//函数传参会创建副本</span><br><span class="line">func changeArray(tempArray [3]int) [3]int &#123;</span><br><span class="line">	for i := range tempArray &#123;</span><br><span class="line">		tempArray[i] = 10</span><br><span class="line">	&#125;</span><br><span class="line">	return  tempArray</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">fmt.Println(changeArray(myarray2))</span><br><span class="line">fmt.Println(myarray2)</span><br><span class="line"></span><br><span class="line">结果：</span><br><span class="line">[10 10 10]</span><br><span class="line">[1 2 3]</span><br></pre></td></tr></table></figure></p>
+<p>数组作为函数参数的情况<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">//函数传参会创建副本</span><br><span class="line">func changeArray(tempArray [3]int) [3]int &#123;</span><br><span class="line">	for i := range tempArray &#123;</span><br><span class="line">		tempArray[i] = 10</span><br><span class="line">	&#125;</span><br><span class="line">	return  tempArray</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">fmt.Println(changeArray(myarray2))</span><br><span class="line">fmt.Println(myarray2)</span><br><span class="line"></span><br><span class="line">结果：</span><br><span class="line">	[10 10 10]</span><br><span class="line">	[1 2 3]</span><br></pre></td></tr></table></figure></p>
 
       
     </div>
@@ -479,7 +479,7 @@
       <ul>
         
           <li>
-            <a href="/2018/06/20/golang/复合数据类型/JSON基础/">post</a>
+            <a href="/2018/06/20/golang/复合数据类型/JSON基础/">JSON基础</a>
           </li>
         
           <li>
